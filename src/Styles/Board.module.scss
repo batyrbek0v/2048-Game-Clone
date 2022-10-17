@@ -1,0 +1,28 @@
+.container {
+  width: 500px;
+  height: auto;
+  margin: auto;
+  padding: 15px;
+  border-radius: 6px;
+  margin-top: 40px;
+  background-color: #bbada0;
+
+  .game_container {
+    display: flex;
+    justify-content: center;
+    .board {
+      width: 107px;
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 55px;
+      font-weight: 700;
+      background: #cdc1b4;
+      color: #776e65;
+      border-radius: 4px;
+      margin: 8px;
+      transition: 1s;
+    }
+  }
+}
