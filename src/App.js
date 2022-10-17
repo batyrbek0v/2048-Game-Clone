@@ -1,9 +1,15 @@
 import Grid from "./components/Grid/Grid";
+import Heading from "./components/Heading/Heading";
 
 function App() {
   return (
     <div>
-      <Grid/>
+      <header>
+        <Heading />
+      </header>
+      <main>
+        <Grid />
+      </main>
     </div>
   );
 }

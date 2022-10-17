@@ -1,28 +1,45 @@
 .container {
-  width: 500px;
-  height: auto;
-  margin: auto;
-  padding: 15px;
-  border-radius: 6px;
-  margin-top: 40px;
-  background-color: #bbada0;
+  display: flex;
+  justify-content: center;
 
   .game_container {
-    display: flex;
-    justify-content: center;
-    .board {
-      width: 107px;
-      height: 100px;
+    width: 500px;
+    height: auto;
+    padding: 8px;
+    border-radius: 6px;
+    background-color: #bbada0;
+
+    .grid_row {
       display: flex;
       justify-content: center;
-      align-items: center;
-      font-size: 55px;
-      font-weight: 700;
-      background: #cdc1b4;
-      color: #776e65;
-      border-radius: 4px;
-      margin: 8px;
-      transition: 1s;
+
+      .grid_cell {
+        width: 110px;
+        height: 107px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 55px;
+        font-weight: 700;
+        background: #eee1c9;
+        background: #eee4da;
+        color: #776e65;
+        border-radius: 4px;
+        margin: 7px;
+        transform: scale();
+        animation: popping 0.3s linear 1;
+
+      @keyframes popping {
+          25% {
+            transform: scale(0.9);
+          }
+      
+          75% {
+            transform: scale(1.1);
+          }
+        }
+
+      }
     }
   }
 }
