@@ -2,7 +2,9 @@ import React from 'react'
 import cls from '../../Styles/Heading.module.scss'
 import { AiOutlineArrowRight } from 'react-icons/ai'
 
-const Heading = () => {
+const Heading = ({ handleNewGame }) => {
+
+
   return (
     <React.Fragment>
       <div className={cls.container}>
@@ -13,7 +15,7 @@ const Heading = () => {
           <div className={cls.score_block}>
             <div className={cls.score}>
               <p>Score</p>
-              <p>0</p>
+              <p>22</p>
             </div>
             <div className={cls.score}>
               <p>Best</p>
@@ -26,7 +28,10 @@ const Heading = () => {
             <p>Join the tiles, get to <span>2048!</span></p>
             <a href="#">How to play <AiOutlineArrowRight /></a>
           </div>
-          <button className={cls.newGame}>New Game</button>
+          <button
+            className={cls.newGame}
+            onClick={handleNewGame}
+          >New Game</button>
         </div>
       </div>
     </React.Fragment>

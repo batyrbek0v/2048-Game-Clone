@@ -8,25 +8,23 @@
     padding: 8px;
     border-radius: 6px;
     background-color: #bbada0;
-
+    position: relative;
     .grid_row {
       display: flex;
       justify-content: center;
 
       .grid_cell {
-        width: 110px;
+        width: 210px;
         height: 107px;
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 55px;
+        font-size: 52px;
         font-weight: 700;
-        background: #eee1c9;
-        background: #eee4da;
+        background: #eee4da59;
         color: #776e65;
         border-radius: 4px;
         margin: 7px;
-        transform: scale();
         animation: popping 0.3s linear 1;
 
       @keyframes popping {

@@ -1,0 +1,69 @@
+// IF PLAYER WON! 
+.container,
+.gameOver {
+  width: 500px;
+  height: 500px;
+  position: absolute;
+  top: 0%;
+  left: 0;
+  z-index: 100;
+  display: flex;
+  transition: 1s ease-in-out;
+  transition-property: all;
+  opacity: 1;
+  // box-shadow: inset 0 0 50px 5px orange;
+  background: rgba(240, 237, 234, 0.8);
+
+  .game_message {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+
+    h1 {
+      font-size: 55px;
+      color: orange;
+    }
+
+    button {
+      padding: 12px 20px;
+      background-color: #8f7a66;
+      font-size: 18px;
+      font-weight: bold;
+      color: white;
+      border-radius: 4px;
+      text-transform: uppercase;
+      border: none;
+      transition: 0.3s;
+      cursor: pointer;
+      outline: none;
+
+      &:hover {
+        background-color: #64503d;
+      }
+    }
+  }
+}
+
+
+// IF GAME OVER 
+.gameOver {
+  box-shadow: inset 0 0 50px 30px #d45e43;
+  position: absolute;
+
+  .game_message {
+    h1 {
+      color: #d45e43;
+    }
+
+    button {
+      background-color: #d45e43;
+
+      &:hover {
+        background-color: #cb3918;
+      }
+    }
+  }
+}
