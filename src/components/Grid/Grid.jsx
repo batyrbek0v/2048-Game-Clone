@@ -22,7 +22,7 @@ const Grid = () => {
     [0, 0, 0, 0],
   ])
 
-
+  const [move, setMove] = React.useState(false)
   const [gameOver, setGameOver] = React.useState(false)
 
 
@@ -387,14 +387,19 @@ const Grid = () => {
       <Heading handleNewGame={newGame} />
       <div className={cls.container}>
         <div className={cls.game_container}>
-          {gameOver && (
-            <div className={c.gameOver}>
-              <div className={c.game_message}>
-                <h1>You lose!</h1>
-                <button onClick={newGame}>Continue</button>
+          {/* {
+            gameOver && (
+              <div className={c.gameOver}>
+                <div className={c.game_message}>
+                  <h1>You lose!</h1>
+                  <button onClick={newGame}>Continue</button>
+                </div>
               </div>
-            </div>
-          )}
+            )
+          } */}
+          {
+            gameOver && (<PopUp newGame={newGame} />)
+          }
           {
             grid.map(
               (row, oneIndex) => (
@@ -405,6 +410,7 @@ const Grid = () => {
                         num={digit}
                         key={index}
                         restart={newGame}
+                        move={move}
                       />
                     ))
                   }

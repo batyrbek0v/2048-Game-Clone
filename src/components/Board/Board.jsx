@@ -6,16 +6,27 @@ import PopUp from '../Game/PopUp'
 
 const Board = ({ num, restart }) => {
 
+  // const [win, setWin] = React.useState(false)
+
+  // num === 2048 && setWin(true)
+
+  // const continueGame = () => {
+  //   setWin(true)
+  // }
+
+
   return (
     <React.Fragment>
-      <PopUp score={num} restart={restart}/>
+      {
+        num === 2048 && (<PopUp score={num} />)
+      }
       <div
         className={cls.grid_cell}
         style={
           {
             "background": useColor(num),
             "color": setColor(num),
-            "fontSize": num === 2048 && "45px"
+            "fontSize": num === 2048 && "45px",
           }
         }
       >

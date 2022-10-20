@@ -1,4 +1,5 @@
 // IF PLAYER WON! 
+
 .container,
 .gameOver {
   width: 500px;
@@ -11,55 +12,82 @@
   transition: 1s ease-in-out;
   transition-property: all;
   opacity: 1;
-  // box-shadow: inset 0 0 50px 5px orange;
+  box-shadow: inset 0 0 50px 20px orange;
   background: rgba(240, 237, 234, 0.8);
+  border-radius: 6px;
+  animation: win 2s linear infinite;
 
-  .game_message {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-
-    h1 {
-      font-size: 55px;
-      color: orange;
+  @keyframes win {
+    25% {
+      box-shadow: inset 5px 0 50px 2px orange;
     }
 
-    button {
-      padding: 12px 20px;
-      background-color: #8f7a66;
-      font-size: 18px;
-      font-weight: bold;
-      color: white;
-      border-radius: 4px;
-      text-transform: uppercase;
-      border: none;
-      transition: 0.3s;
-      cursor: pointer;
-      outline: none;
+    75% {
+      box-shadow: inset 5px 0 50px 35px orange;
+    }
+  }
 
-      &:hover {
-        background-color: #64503d;
-      }
+}
+
+
+.game_message {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  border-radius: 6px;
+
+  h1 {
+    font-size: 55px;
+    color: orange;
+  }
+
+  button {
+    padding: 12px 20px;
+    background-color: orange;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    border-radius: 4px;
+    text-transform: uppercase;
+    border: none;
+    transition: 0.3s;
+    cursor: pointer;
+    outline: none;
+
+    &:hover {
+      background-color: #bc7b02;
     }
   }
 }
 
 
+
 // IF GAME OVER 
 .gameOver {
-  box-shadow: inset 0 0 50px 30px #d45e43;
   position: absolute;
+  box-shadow: inset 0 0 50px 20px #BD070D;
+  animation: gameOver 3s linear infinite;
+
+  @keyframes gameOver {
+    25% {
+      box-shadow: inset 5px 0 50px 2px #BD070D;
+    }
+
+    75% {
+      box-shadow: inset 5px 0 50px 25px #BD070D;
+    }
+  }
 
   .game_message {
     h1 {
-      color: #d45e43;
+      color: #BD070D;
     }
 
     button {
-      background-color: #d45e43;
+      background-color: #BD070D;
 
       &:hover {
         background-color: #cb3918;

@@ -1,20 +1,21 @@
 import React from 'react'
 import cls from '../../Styles/PopUp.module.scss'
-const PopUp = ({ restart, titleText }) => {
+const PopUp = ({ score, newGame }) => {
 
   return (
     <React.Fragment>
-     
-      {/* {
-        !gameOver && (
-          <div className={cls.gameOver}>
-            <div className={cls.game_message}>
-              <h1>You Lose!</h1>
-              <button onClick={restart}>Restart</button>
-            </div>
-          </div>
-        ) 
-      } */}
+      <div className={score == 2048 ? cls.container : cls.gameOver}>
+        <div className={cls.game_message}>
+          <h1>
+            {score == 2048 ? 'You Won !' : ' You Lose:('}
+          </h1>
+          {
+            score == 2048
+              ? (<button onClick={''}>Continue</button>)
+              : (<button onClick={newGame}>Try Again</button>)
+          }
+        </div>
+      </div>
     </React.Fragment>
   )
 }
