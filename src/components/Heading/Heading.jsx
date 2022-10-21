@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import cls from '../../Styles/Heading.module.scss'
-import { AiOutlineArrowRight } from 'react-icons/ai'
+import { GoUnmute } from 'react-icons/go'
+import { GoMute } from 'react-icons/go'
 
-const Heading = ({ handleNewGame }) => {
+const Heading = ({ handleNewGame, score }) => {
+
 
 
   return (
@@ -15,18 +17,22 @@ const Heading = ({ handleNewGame }) => {
           <div className={cls.score_block}>
             <div className={cls.score}>
               <p>Score</p>
-              <p>22</p>
+              <p>{score}</p>
             </div>
             <div className={cls.score}>
               <p>Best</p>
-              <p>24292</p>
+              <p>0</p>
             </div>
           </div>
         </div>
         <div className={cls.bottom}>
           <div className={cls.desc}>
-            <p>Join the tiles, get to <span>2048!</span></p>
-            <a href="#">How to play <AiOutlineArrowRight /></a>
+            <button>
+              <GoUnmute size={22} />
+            </button>
+            <button>
+              <GoMute size={22} />
+            </button>
           </div>
           <button
             className={cls.newGame}
@@ -39,3 +45,20 @@ const Heading = ({ handleNewGame }) => {
 }
 
 export default Heading
+
+
+
+
+  // const [initialState, setInitialState] = useState(0)
+
+  // React.useEffect(() => {
+
+  //   localStorage.setItem('score', score)
+  //   const base = JSON.parse(localStorage.getItem('score'))
+  //   setState(base)
+
+  //   localStorage.setItem('initialScore', 0)
+  //   const initial = JSON.parse(localStorage.getItem('initialScore'))
+  //   setInitialState(initial)
+
+  // }, [score])

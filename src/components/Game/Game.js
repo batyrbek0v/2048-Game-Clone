@@ -1,13 +1,17 @@
 import React from 'react'
-import Board from '../Board/Board'
+import Tile from '../Tile/Tile'
 import cls from '../../Styles/Board.module.scss'
-import c from '../../Styles/PopUp.module.scss'
 import { cloneDeep } from 'lodash'
 import { useEvent } from '../../hooks/UseEvent'
 import Heading from '../Heading/Heading'
-import PopUp from '../Game/PopUp'
+import PopUp from '../LosePopUp/LosePopUp'
+import left from '../../assets/Sound/swipeLeft.mp3'
+import right from '../../assets/Sound/swipeRight.mp3'
+import up from '../../assets/Sound/swipeUp.mp3'
+import gameOverSound from '../../assets/Sound/gameOver.mp3'
+import { useSwipeable } from 'react-swipeable'
 
-const Grid = () => {
+const Matrix = () => {
 
   const DOWN_ARROW = 40
   const RIGHT_ARROW = 39
@@ -15,26 +19,28 @@ const Grid = () => {
   const LEFT_ARROW = 37
 
 
-  const [grid, setGrid] = React.useState([
+
+  const [matrix, setMatrix] = React.useState([
     [0, 0, 0, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0],
   ])
 
-  const [move, setMove] = React.useState(false)
+  const [score, setScore] = React.useState(0)
   const [gameOver, setGameOver] = React.useState(false)
 
+  // let newScore = 0
 
   // INITIALIZE ================================
   const initialize = () => {
 
-    let newGrid = cloneDeep(grid)
+    let newMatrix = cloneDeep(matrix)
 
-    addNumber(newGrid)
-    addNumber(newGrid)
+    addCell(newMatrix)
+    addCell(newMatrix)
 
-    setGrid(newGrid)
+    setMatrix(newMatrix)
 
   }
 
@@ -42,27 +48,27 @@ const Grid = () => {
 
 
   // ADD NUMBER  - ADD AN CELL
-  const addNumber = (newGrid) => {
+  const addCell = (newMatrix) => {
 
     let added = false;
-    let gridFull = false;
+    let matrixFull = false;
     let attempts = 0
 
     while (!added) {
-      if (gridFull) {
+      if (matrixFull) {
         break;
       }
-      const colX = Math.floor(Math.random() * 4)
-      const colY = Math.floor(Math.random() * 4)
+      const cell = Math.floor(Math.random() * 4)
+      const cell2 = Math.floor(Math.random() * 4)
       attempts++;
 
-      if (newGrid[colX][colY] === 0) {
-        newGrid[colX][colY] = Math.random() > 0.5 && 2 || Math.random() > 0.2 ? 2 : 4;
+      if (newMatrix[cell][cell2] === 0) {
+        newMatrix[cell][cell2] = Math.random() > 1 && 2 || Math.random() > 0.1 ? 2 : 4;
         added = true;
       }
 
       if (attempts > 50) {
-        gridFull = true
+        matrixFull = true
       }
     }
 
@@ -73,11 +79,11 @@ const Grid = () => {
   // SWIPE-LEFT
   const swipeLeft = (theEnd) => {
 
-    let oldGrid = grid;
-    let newArray = cloneDeep(grid)
+    let oldMatrix = matrix;
+    let newMatrix = cloneDeep(matrix)
 
     for (let i = 0; i < 4; i++) {
-      let b = newArray[i]
+      let b = newMatrix[i]
       let slow = 0;
       let fast = 1;
       while (slow < 4) {
@@ -93,13 +99,17 @@ const Grid = () => {
           b[slow] = b[fast]
           b[fast] = 0
           fast++;
-
         } else if (b[slow] !== 0 && b[fast] === 0) {
           fast++;
+
         } else if (b[slow] !== 0 && b[fast] !== 0) {
 
           if (b[slow] === b[fast]) {
             b[slow] = b[slow] + b[fast]
+
+            // newScore = b[slow] + b[fast] + newScore
+            setScore(score + b[slow])
+
             b[fast] = 0
             fast = slow + 1;
             slow++
@@ -112,14 +122,14 @@ const Grid = () => {
       }
     }
 
-    if (JSON.stringify(oldGrid) !== JSON.stringify(newArray)) {
-      addNumber(newArray)
+    if (JSON.stringify(oldMatrix) !== JSON.stringify(newMatrix)) {
+      addCell(newMatrix)
     }
 
     if (theEnd) {
-      return newArray
+      return newMatrix
     } else {
-      setGrid(newArray)
+      setMatrix(newMatrix)
     }
 
   }
@@ -128,15 +138,14 @@ const Grid = () => {
   // SWIPE-RIGHT
   const swipeRight = (theEnd) => {
 
-    let oldGrid = grid
-    let newArray = cloneDeep(grid)
+    let oldMatrix = matrix
+    let newMatrix = cloneDeep(matrix)
 
     for (let i = 3; i >= 0; i--) {
 
-      let b = newArray[i]
+      let b = newMatrix[i]
       let slow = b.length - 1
       let fast = slow - 1
-
       while (slow > 0) {
         if (fast === -1) {
           fast = slow - 1
@@ -160,6 +169,9 @@ const Grid = () => {
           if (b[slow] === b[fast]) {
 
             b[slow] = b[slow] + b[fast]
+            // newScore = b[slow] + b[fast] + newScore
+            setScore(score + b[slow])
+
             b[fast] = 0
             fast = slow - 1
             slow--
@@ -172,14 +184,14 @@ const Grid = () => {
       }
     }
 
-    if (JSON.stringify(newArray) !== JSON.stringify(oldGrid)) {
-      addNumber(newArray)
+    if (JSON.stringify(newMatrix) !== JSON.stringify(oldMatrix)) {
+      addCell(newMatrix)
     }
 
     if (theEnd) {
-      return newArray
+      return newMatrix
     } else {
-      setGrid(newArray)
+      setMatrix(newMatrix)
     }
 
   }
@@ -188,8 +200,8 @@ const Grid = () => {
   // SWIPE-DOWN
   const swipeDown = (theEnd) => {
 
-    let b = cloneDeep(grid)
-    let oldGrid = JSON.parse(JSON.stringify(grid))
+    let b = cloneDeep(matrix)
+    let oldMatrix = JSON.parse(JSON.stringify(matrix))
 
     for (let i = 3; i >= 0; i--) {
       let slow = b.length - 1
@@ -218,6 +230,10 @@ const Grid = () => {
           if (b[slow][i] === b[fast][i]) {
 
             b[slow][i] = b[slow][i] + b[fast][i]
+            // newScore = b[slow][i] + b[fast][i] + newScore
+            setScore(score + b[slow][i])
+
+
             b[fast][i] = 0
 
             fast = slow - 1
@@ -229,13 +245,13 @@ const Grid = () => {
         }
       }
     }
-    if (JSON.stringify(b) !== JSON.stringify(oldGrid)) {
-      addNumber(b)
+    if (JSON.stringify(b) !== JSON.stringify(oldMatrix)) {
+      addCell(b)
     }
     if (theEnd) {
       return b
     } else {
-      setGrid(b)
+      setMatrix(b)
     }
 
   }
@@ -244,8 +260,8 @@ const Grid = () => {
   // SWIPE-UP 
   const swipeUp = (theEnd) => {
 
-    let b = cloneDeep(grid)
-    let oldGrid = JSON.parse(JSON.stringify(grid))
+    let b = cloneDeep(matrix)
+    let oldMatrix = JSON.parse(JSON.stringify(matrix))
 
     for (let i = 0; i < 4; i++) {
       let slow = 0
@@ -271,6 +287,10 @@ const Grid = () => {
         } else if (b[slow][i] !== 0 && b[fast][i] !== 0) {
           if (b[slow][i] === b[fast][i]) {
             b[slow][i] = b[slow][i] + b[fast][i]
+
+            // newScore = b[slow][i] + b[fast][i] + newScore
+            setScore(score + b[slow][i])
+
             b[fast][i] = 0
             fast = slow + 1
 
@@ -282,14 +302,14 @@ const Grid = () => {
         }
       }
     }
-    if (JSON.stringify(oldGrid) !== JSON.stringify(b)) {
-      addNumber(b)
+    if (JSON.stringify(oldMatrix) !== JSON.stringify(b)) {
+      addCell(b)
     }
 
     if (theEnd) {
       return b
     } else {
-      setGrid(b)
+      setMatrix(b)
     }
   }
   // ========================
@@ -299,22 +319,22 @@ const Grid = () => {
   const checkGameOver = () => {
 
     let checker = swipeLeft(true)
-    if (JSON.stringify(grid) !== JSON.stringify(checker)) {
+    if (JSON.stringify(matrix) !== JSON.stringify(checker)) {
       return false
     }
 
     let checker2 = swipeDown(true)
-    if (JSON.stringify(grid) !== JSON.stringify(checker2)) {
+    if (JSON.stringify(matrix) !== JSON.stringify(checker2)) {
       return false
     }
 
     let checker3 = swipeRight(true)
-    if (JSON.stringify(grid) !== JSON.stringify(checker3)) {
+    if (JSON.stringify(matrix) !== JSON.stringify(checker3)) {
       return false
     }
 
     let checker4 = swipeUp(true)
-    if (JSON.stringify(grid) !== JSON.stringify(checker4)) {
+    if (JSON.stringify(matrix) !== JSON.stringify(checker4)) {
       return false
     }
 
@@ -328,16 +348,16 @@ const Grid = () => {
   const newGame = () => {
     setGameOver(false)
 
-    const newBoard = ([
+    const newMatrix = ([
       [0, 0, 0, 0],
       [0, 0, 0, 0],
       [0, 0, 0, 0],
       [0, 0, 0, 0],
     ])
-
-    addNumber(newBoard)
-    addNumber(newBoard)
-    setGrid(newBoard)
+    setScore(0)
+    addCell(newMatrix)
+    addCell(newMatrix)
+    setMatrix(newMatrix)
   }
   // ==============================================
 
@@ -347,19 +367,27 @@ const Grid = () => {
     if (gameOver) {
       return
     }
+    const upSwipe = new Audio(up)
+    const leftSwipe = new Audio(left)
+    const rightSwipe = new Audio(right)
+    const youLose = new Audio(gameOverSound)
 
     switch (e.keyCode) {
       case UP_ARROW:
         swipeUp()
+        upSwipe.play()
         break;
       case LEFT_ARROW:
         swipeLeft()
+        leftSwipe.play()
         break;
       case RIGHT_ARROW:
         swipeRight()
+        rightSwipe.play()
         break;
       case DOWN_ARROW:
         swipeDown()
+        rightSwipe.play()
         break;
 
       default:
@@ -369,6 +397,7 @@ const Grid = () => {
     let gameOverr = checkGameOver()
     if (gameOverr) {
       setGameOver(true)
+      youLose.play()
     }
   }
   // =============================================
@@ -382,40 +411,43 @@ const Grid = () => {
   useEvent('keydown', handleKeyDown)
 
 
+  // SWIPES FOR MOBILE VERSION
+
+  const mobileSwipe = useSwipeable({
+    onSwipedUp: (() => swipeUp()),
+    onSwipedDown: (() => swipeDown()),
+    onSwipedLeft: (() => swipeLeft()),
+    onSwipedRight: (() => swipeRight()),
+  })
+
+  // ===============================
+
   return (
     <React.Fragment>
-      <Heading handleNewGame={newGame} />
+      <Heading handleNewGame={newGame} score={score} />
       <div className={cls.container}>
-        <div className={cls.game_container}>
-          {/* {
-            gameOver && (
-              <div className={c.gameOver}>
-                <div className={c.game_message}>
-                  <h1>You lose!</h1>
-                  <button onClick={newGame}>Continue</button>
-                </div>
-              </div>
-            )
-          } */}
+        <div className={cls.game_container} {...mobileSwipe}>
+
           {
             gameOver && (<PopUp newGame={newGame} />)
           }
           {
-            grid.map(
-              (row, oneIndex) => (
-                <div className={cls.grid_row} key={oneIndex}>
-                  {
-                    row.map((digit, index) => (
-                      < Board
-                        num={digit}
-                        key={index}
-                        restart={newGame}
-                        move={move}
-                      />
-                    ))
-                  }
-                </div>
-              )
+            matrix.map(
+              (col, index) => {
+                return (
+                  <div className={cls.tile_row} key={index}>
+                    {
+                      col.map((item, index) => (
+                        <Tile
+                          num={item}
+                          key={index}
+                          restart={newGame}
+                        />
+                      ))
+                    }
+                  </div>
+                )
+              }
             )
           }
         </div>
@@ -424,6 +456,6 @@ const Grid = () => {
   )
 }
 
-export default Grid
+export default Matrix
 
 

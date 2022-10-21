@@ -2,18 +2,37 @@
   display: flex;
   justify-content: center;
 
+  @media (max-width:600px) {
+    padding: 1rem;
+  }
+
+  @media (max-width:325px) {
+    padding: 4px;
+  }
+
   .game_container {
     width: 500px;
-    height: auto;
     padding: 8px;
     border-radius: 6px;
     background-color: #bbada0;
     position: relative;
-    .grid_row {
+
+    @media (max-width:600px) {
+      width: 100%;
+    }
+
+    @media (max-width:426px) {
+      width: 100%;
+      height: auto;
+    }
+
+
+
+    .tile_row {
       display: flex;
       justify-content: center;
 
-      .grid_cell {
+      .cell {
         width: 210px;
         height: 107px;
         display: flex;
@@ -27,11 +46,20 @@
         margin: 7px;
         animation: popping 0.5s linear 1;
 
-      @keyframes popping {
+        @media (max-width:426px) {
+          height: 90px;
+          font-size: 42px;
+        }
+
+        @media (max-width:376px) {
+          height: 70px;
+        }
+
+        @keyframes popping {
           25% {
             transform: scale(0.9);
           }
-      
+
           75% {
             transform: scale(1.1);
           }

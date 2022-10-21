@@ -1,9 +1,9 @@
-import Grid from "./components/Grid/Grid";
+import Matrix from "./components/Game/Game";
 
 function App() {
   return (
     <div>
-      <Grid />
+      <Matrix />
     </div>
   );
 }

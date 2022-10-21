@@ -7,22 +7,55 @@
   margin: auto;
   padding: 2rem 0;
 
+  @media (max-width:600px) {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  @media (max-width:325px) {
+    padding: 1rem 8px;
+  }
+
   .heading,
   .bottom {
     width: 100%;
     display: flex;
     justify-content: space-between;
 
+    @media (max-width:600px) {
+      width: 100%;
+    }
+
     .logo {
       h1 {
         color: #776e65;
         font-size: 80px;
+
+        @media (max-width:426px) {
+          font-size: 60px;
+        }
+
+        @media (max-width:376px) {
+          font-size: 44px;
+        }
+
+        @media (max-width:325px) {
+          font-size: 36px;
+        }
       }
+
+
+
     }
 
     .score_block {
       display: flex;
       gap: 5px;
+
+      @media (max-width:325px) {
+        width: 100%;
+        justify-content: end;
+      }
 
       .score {
         height: 55px;
@@ -34,7 +67,15 @@
         border-radius: 4px;
         font-weight: 800;
         background-color: #bbada0;
-        
+
+        @media (max-width:600px) {
+          width: 100%;
+        }
+
+        @media (max-width:325px) {
+          width: 40%;
+        }
+
         &:last-child {
           padding: 12px 25px;
         }
@@ -57,26 +98,22 @@
 
   .bottom {
     margin-top: 8px;
+    padding: 1rem 0;
 
     .desc {
-      line-height: 1.2;
 
-      p {
-        font-size: 18px;
-        color: #776e65;
-        font-weight: 700;
-        span{
-          font-weight: 800;
-        }
-      }
-
-      a {
+      button {
+        width: 80px;
+        height: 40px;
         display: flex;
+        justify-content: center;
         align-items: center;
-        // text-decoration: none;
-        font-weight: 800;
         color: #776e65;
-        gap: 4px;
+        padding: 0px 16px;
+        cursor: pointer;
+        background: transparent;
+        border: 1px solid #776e65;
+        border-radius: 4px;
       }
     }
 
@@ -90,6 +127,11 @@
       font-weight: 700;
       border: 0;
       cursor: pointer;
+
+      @media (max-width:376px) {
+        font-size: 16px;
+        padding: 0 12px;
+      }
     }
   }
 }

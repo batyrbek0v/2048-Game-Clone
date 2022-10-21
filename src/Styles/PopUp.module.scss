@@ -17,6 +17,48 @@
   border-radius: 6px;
   animation: win 2s linear infinite;
 
+  @media (max-width:600px) {
+    width: 100%;
+    height: 100%;
+  }
+
+  .game_message {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    border-radius: 6px;
+
+    h1 {
+      font-size: 55px;
+      color: orange;
+
+      @media (max-width:376px) {
+        font-size: 48px;
+      }
+    }
+
+    button {
+      padding: 12px 20px;
+      background-color: orange;
+      font-size: 18px;
+      font-weight: bold;
+      color: white;
+      border-radius: 4px;
+      text-transform: uppercase;
+      border: none;
+      transition: 0.3s;
+      cursor: pointer;
+      outline: none;
+
+      &:hover {
+        background-color: #bc7b02;
+      }
+    }
+  }
+
   @keyframes win {
     25% {
       box-shadow: inset 5px 0 50px 2px orange;
@@ -30,37 +72,9 @@
 }
 
 
-.game_message {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-  border-radius: 6px;
-
-  h1 {
-    font-size: 55px;
-    color: orange;
-  }
-
-  button {
-    padding: 12px 20px;
-    background-color: orange;
-    font-size: 18px;
-    font-weight: bold;
-    color: white;
-    border-radius: 4px;
-    text-transform: uppercase;
-    border: none;
-    transition: 0.3s;
-    cursor: pointer;
-    outline: none;
-
-    &:hover {
-      background-color: #bc7b02;
-    }
-  }
+.containerNone {
+  display: none;
+  // opacity: 0;
 }
 
 
