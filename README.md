@@ -1,6 +1,8 @@
-# Getting Started with Create React App
+# Hi, everyone. This is a 2048game (clone)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Link to site 👇.
+
+https://2048clonedd.netlify.app/
 
 ## Available Scripts
 
