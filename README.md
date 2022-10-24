@@ -1,8 +1,8 @@
 # Hi, everyone. This is a 2048game (clone)
 
-Link to site 👇.
+## Link to site 👇.
 
-https://2048clonedd.netlify.app/
+## https://2048clonedd.netlify.app/
 
 ## Available Scripts
 
